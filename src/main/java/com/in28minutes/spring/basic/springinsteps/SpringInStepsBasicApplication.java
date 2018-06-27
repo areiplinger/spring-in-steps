@@ -1,11 +1,15 @@
 package com.in28minutes.spring.basic.springinsteps;
 
 import com.in28minutes.spring.basic.springinsteps.basic.BinarySearchImpl;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import java.lang.AutoCloseable.*;
+import org.springframework.stereotype.Component;
 
-@SpringBootApplication
+@Configuration
+@ComponentScan
 public class SpringInStepsBasicApplication {
 
     //What are the beans?
@@ -20,18 +24,22 @@ public class SpringInStepsBasicApplication {
 
         // Spring application context
         // Gets the application context of beans
-        ApplicationContext applicationContext =
-                SpringApplication.run(SpringInStepsBasicApplication.class, args);
 
-        BinarySearchImpl binarySearch = applicationContext.getBean(BinarySearchImpl.class);
 
-        BinarySearchImpl binarySearch1 = applicationContext.getBean(BinarySearchImpl.class);
+            ApplicationContext applicationContext =
+                    new AnnotationConfigApplicationContext(SpringInStepsBasicApplication.class);
 
-        System.out.println(binarySearch);
-        System.out.println(binarySearch1);
 
-        int result = binarySearch.binarySearch(new int[] {12,4,6}, 3);
-        System.out.println(result);
+            BinarySearchImpl binarySearch = applicationContext.getBean(BinarySearchImpl.class);
 
+            BinarySearchImpl binarySearch1 = applicationContext.getBean(BinarySearchImpl.class);
+
+            System.out.println(binarySearch);
+            System.out.println(binarySearch1);
+
+            int result = binarySearch.binarySearch(new int[]{12, 4, 6}, 3);
+            System.out.println(result);
 	}
 }
+
+//((AnnotationConfigApplicationContext) applicationContext).close();

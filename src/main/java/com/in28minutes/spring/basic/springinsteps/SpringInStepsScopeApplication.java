@@ -1,15 +1,15 @@
 package com.in28minutes.spring.basic.springinsteps;
 
-import com.in28minutes.spring.basic.springinsteps.basic.BinarySearchImpl;
 import com.in28minutes.spring.basic.springinsteps.scope.PersonDAO;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
 
-@SpringBootApplication
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
 public class SpringInStepsScopeApplication {
 
     //What are the beans?
@@ -20,14 +20,11 @@ public class SpringInStepsScopeApplication {
 
     public static void main(String[] args) {
 
-        // Old method having to manually wire the dependency
-        // (creating the object, but dynamically passing the (class)method to use)
-        /*BinarySearchImpl binarySearch = new BinarySearchImpl(new QuickSortAlg());*/
-
         // Spring application context
         // Gets the application context of beans
         ApplicationContext applicationContext =
-                SpringApplication.run(SpringInStepsScopeApplication.class, args);
+                new AnnotationConfigApplicationContext(SpringInStepsScopeApplication.class);
+                //SpringApplication.run(SpringInStepsScopeApplication.class, args);
 
         PersonDAO personDAO = applicationContext.getBean(PersonDAO.class);
 
@@ -35,6 +32,7 @@ public class SpringInStepsScopeApplication {
 
 
         LOGGER.info("{}", personDAO);
+        LOGGER.info("{}", personDAO.getJdbcConnection());
         LOGGER.info("{}", personDAO.getJdbcConnection());
 
         LOGGER.info("{}", personDAO1);
